@@ -1,16 +1,16 @@
-package algorithms.mazeGenerators;
+package algorithms.maze3D;
 
-public abstract class AMazeGenerator implements IMazeGenerator{
+public abstract class AMaze3DGenerator implements IMaze3DGenerator {
 
-    @Override
     /**
+     * @param depth - maze's depth
      * @param row - maze's row size
      * @param column - maze's column size
      * @return - returns amount of time it takes to generate the maze
      */
-    public long measureAlgorithmTimeMillis(int row, int column) { // measures maze construction time
+    public long measureAlgorithmTimeMillis(int depth, int row, int column) {
         long startTime = System.currentTimeMillis();
-        generate(row,column);
+        generate(depth,row,column);
         long stopTime  = System.currentTimeMillis();
         return stopTime - startTime;
     }

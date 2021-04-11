@@ -1,6 +1,4 @@
-package algorithms.mazeGenerators.search;
-import java.util.ArrayList;
-
+package algorithms.search;
 import java.util.ArrayList;
 
 public interface ISearchable {

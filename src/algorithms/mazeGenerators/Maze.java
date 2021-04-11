@@ -1,15 +1,23 @@
 
 package algorithms.mazeGenerators;
 
-
-import algorithms.mazeGenerators.maze3D.Position3D;
-
 public class Maze {
     Position entrance;
     Position exit;
-    public int[][] matrix;
+    private int[][] matrix;
+
+    /**
+     * @param row - number of the maze's rows
+     * @param column- number of the maze's columns
+     */
     public Maze(int row, int column) {
+        if (row < 2 || column < 2)
+            throw new IllegalArgumentException("Invalid Maze Dimensions input");
         matrix = new int[row][column];
+    }
+
+    public int[][] getMatrix() {
+        return matrix;
     }
 
     public Position getStartPosition() {
@@ -20,36 +28,13 @@ public class Maze {
         return exit;
     }
 
-
-    public void printWITHSTYLE(){
-        final char WALL_CHAR = '█';
-        for (int i=0; i<matrix.length; i++){
-            for (int j=0; j<matrix[0].length; j++){
-                if (matrix[i][j] == 1)
-                    System.out.print(WALL_CHAR + " ");
-                else if (matrix[i][j] == 0)
-                    System.out.print(" " + " ");
-                else if (matrix[i][j] == 2){
-                    System.out.print("S" + " ");
-                    matrix[i][j]=0;
-                }
-                else if (matrix[i][j] == 3){
-                    matrix[i][j]=0 ;
-                    System.out.print("E" + " ");
-                }
-                else{
-                    System.out.print("*" + " ");
-                    matrix[i][j]=0;
-                }
-
-            }
-            System.out.println(" ");
-        }
-    }
+    /**
+     * printing function of the 2D maze
+     */
     public void print(){
         int[][] temp = matrix;
-        temp[entrance.getX()][entrance.getY()]=2;
-        temp[exit.getX()][exit.getY()]=3;
+        temp[entrance.getRowIndex()][entrance.getColumnIndex()]=2;
+        temp[exit.getRowIndex()][exit.getColumnIndex()]=3;
         String body = "";
         for (int[] r : matrix){
             body += "{";
@@ -61,7 +46,7 @@ public class Maze {
                     body += "S";
                 }
                 else{
-                    temp[exit.getX()][exit.getY()]=0;
+                    temp[exit.getRowIndex()][exit.getColumnIndex()]=0;
                     body += "E";
                 }
             }
@@ -73,30 +58,32 @@ public class Maze {
     }
 
 
-
+    /*
+    // Function below are indicators of the possible neighbors
+     */
     public boolean checkUp(Position s){
-        if (s.getX() != 0 && matrix[s.getX()-1][s.getY()]== 0){
+        if (s.getRowIndex() != 0 && matrix[s.getRowIndex()-1][s.getColumnIndex()]== 0){
             return true;
         }
         return false;
     }
 
     public boolean checkDown(Position s){
-        if (s.getX() != matrix.length-1 && matrix[s.getX()+1][s.getY()] == 0){
+        if (s.getRowIndex() != matrix.length-1 && matrix[s.getRowIndex()+1][s.getColumnIndex()] == 0){
             return true;
         }
         return false;
     }
 
     public boolean checkLeft(Position s){
-        if (s.getY() != 0 && (matrix[s.getX()][s.getY()-1] == 0)){
+        if (s.getColumnIndex() != 0 && (matrix[s.getRowIndex()][s.getColumnIndex()-1] == 0)){
             return true;
         }
         return false;
     }
 
     public boolean checkRight(Position s){
-        if (s.getY() != matrix[0].length-1 && matrix[s.getX()][s.getY()+1] == 0){
+        if (s.getColumnIndex() != matrix[0].length-1 && matrix[s.getRowIndex()][s.getColumnIndex()+1] == 0){
             return true;
         }
         return false;
@@ -104,32 +91,32 @@ public class Maze {
 
 
     public boolean checkUpLeft(Position s) {
-        if ((checkUp(s) || checkLeft(s)) && s.getX() != 0 && s.getY() != 0 &&
-                matrix[s.getX()-1][s.getY()-1] == 0) {
+        if ((checkUp(s) || checkLeft(s)) && s.getRowIndex() != 0 && s.getColumnIndex() != 0 &&
+                matrix[s.getRowIndex()-1][s.getColumnIndex()-1] == 0) {
             return true;
         }
         return false;
     }
 
     public boolean checkDownLeft(Position s) {
-        if ((checkDown(s) || checkLeft(s)) && s.getX() != matrix.length-1 && s.getY() != 0 &&
-                matrix[s.getX()+1][s.getY()-1] == 0) {
+        if ((checkDown(s) || checkLeft(s)) && s.getRowIndex() != matrix.length-1 && s.getColumnIndex() != 0 &&
+                matrix[s.getRowIndex()+1][s.getColumnIndex()-1] == 0) {
             return true;
         }
         return false;
     }
 
     public boolean checkUpRight(Position s) {
-        if ((checkUp(s) || checkRight(s)) && s.getX() != 0 && s.getY() != matrix[0].length-1 &&
-                matrix[s.getX()-1][s.getY()+1] == 0) {
+        if ((checkUp(s) || checkRight(s)) && s.getRowIndex() != 0 && s.getColumnIndex() != matrix[0].length-1 &&
+                matrix[s.getRowIndex()-1][s.getColumnIndex()+1] == 0) {
             return true;
         }
         return false;
     }
 
     public boolean checkDownRight(Position s) {
-        if ((checkDown(s) || checkRight(s)) && s.getX() != matrix.length-1 && s.getY() != matrix[0].length-1 &&
-                matrix[s.getX()+1][s.getY()+1] == 0) {
+        if ((checkDown(s) || checkRight(s)) && s.getRowIndex() != matrix.length-1 && s.getColumnIndex() != matrix[0].length-1 &&
+                matrix[s.getRowIndex()+1][s.getColumnIndex()+1] == 0) {
             return true;
         }
         return false;

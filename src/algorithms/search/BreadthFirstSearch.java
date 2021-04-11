@@ -1,4 +1,4 @@
-package algorithms.mazeGenerators.search;
+package algorithms.search;
 
 import java.util.*;
 
@@ -6,6 +6,9 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
 
     protected Queue<AState> queue;
 
+    /**
+     * BreadthFirstSearch constructor
+     */
     public BreadthFirstSearch() {
         this.queue = new LinkedList<>();
         this.visitedStates = 0;
@@ -13,9 +16,15 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
         this.visited = new HashMap<>();
     }
 
+    /**
+     * @param domain - the searchable domain
+     * @return - returns the solution. if no solution found - returns null
+     * based on the BFS algorithm
+     */
     @Override
     public Solution solve(ISearchable domain) {
-
+        if (domain == null)
+            throw new IllegalArgumentException("Invalid Input");
         AState state;
         visited.put(domain.getStartState().getHashCode(), domain.getStartState());
         this.queue.add(domain.getStartState());
@@ -32,18 +41,6 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
         }
         return null; // returns null if no solution
     }
-
-//    public void checkPossibleStatess(ArrayList<AState> possibleStates){
-//        if (!possibleStates.isEmpty()){
-//            for (AState s : possibleStates){
-//                if (!visited.containsKey(s.getHashCode())){
-//                    s.setCost(s.getCost() + s.cameFrom.getCost());
-//                    this.queue.add(s);
-//                    visited.put(s.getHashCode(),s);
-//                }
-//            }
-//        }
-//    }
 
 }
 

@@ -1,15 +1,18 @@
 package algorithms.mazeGenerators;
 
 public class Position {
-    int value;
     int x;
     int y;
-    boolean visited;
+
+    /**
+     * @param xPos - current row
+     * @param yPos - current column
+     */
     public Position(int xPos, int yPos){
-        this.value =1;
+        if (xPos < 0 || yPos< 0)
+            throw new IllegalArgumentException("Invalid Position input");
         this.x=xPos;
         this.y=yPos;
-        this.visited=false;
     }
     @Override
     public String toString() {
@@ -19,35 +22,23 @@ public class Position {
                 '}';
     }
 
-    public int getValue() {
-        return value;
+    /**
+     * @param other - other Position
+     * @return - returns if this position is equal to the other
+     */
+    public boolean equals(Position other){
+        if (other == null)
+            throw new IllegalArgumentException("Invalid Argument received");
+        if (this.x == other.getRowIndex() && this.y == other.getColumnIndex())
+            return true;
+        return false;
     }
 
-    public int getX() {
+    public int getRowIndex() {
         return x;
     }
 
-    public int getY() {
+    public int getColumnIndex() {
         return y;
-    }
-
-    public boolean isVisited() {
-        return visited;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public void setVisited(boolean visited) {
-        this.visited = visited;
     }
 }
